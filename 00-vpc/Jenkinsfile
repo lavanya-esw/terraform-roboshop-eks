@@ -1,0 +1,45 @@
+pipeline{
+    agent{
+        node{
+            label 'AGENT-1'
+        }
+    }
+    stages{
+        stage('init stage'){
+            steps{
+                script{
+                    withAWS(region:'us-east-1',credentials:'aws_access') {
+                        sh """
+                            cd 00-vpc
+                            terraform init
+                        """
+                    }
+                }
+            }
+        }
+        stage('plan stage'){
+            steps{
+                script{
+                    withAWS(region:'us-east-1',credentials:'aws_access') {
+                        sh """
+                            cd 00-vpc
+                            terraform plan
+                        """
+                    }
+                }
+            }
+        }
+        stage('deploy stage'){
+            steps{
+                script{
+                    withAWS(region:'us-east-1',credentials:'aws_access') {
+                        sh """
+                            cd 00-vpc
+                            terraform apply -auto-approve
+                        """
+                    }
+                }
+            }
+        }
+    }
+}
