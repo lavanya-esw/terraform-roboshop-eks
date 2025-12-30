@@ -44,16 +44,56 @@ pipeline{
                 }
             }
         }
-        stage('Trigger SG') {
-            steps {
-                script {
-                    build job: '10-sg',
-                        wait: false, // Wait for completion
-                        propagate: false // Propagate status
+        
+        stage('parallel trigger'){
+            parallel{
+                stage('SG rules'){
+                    script{
+                        build job: '30-sg-rules',
+                        wait: false,
+                        propagate: false
+                    }
+                }
+                stage('trigger ecr'){
+                    steps{
+                        script{
+                            build job: '40-ecr',
+                            wait: false,
+                            propagate: false  
+                        }
+                    }
+                }
+                stage('trigger acm'){
+                    steps{
+                        script{
+                            build job: '70-acm',
+                            wait: true
+                            propagate: true , 
+                        }
+                    }
+                }
+                stage('trigger ingress alb'){
+                    steps{
+                        script{
+                            build job: '80-ingress-alb',
+                            wait: false,
+                            propagate: false  
+                        }
+                    }
+                }
+                stage('trigger eks'){
+                    steps{
+                        script{
+                            build job: '90-eks',
+                            wait: false,
+                            propagate: false  
+                        }
+                    }
                 }
             }
         }
     }
+    
     post{
         always{
             echo 'I will always say Hello again!'
