@@ -37,7 +37,7 @@ pipeline{
                 script{
                     withAWS(region:'us-east-1',credentials:'aws_access') {
                         sh """
-                            cd cd 40-ecr
+                            cd 40-ecr
                             terraform apply -auto-approve
                         """
                     }
