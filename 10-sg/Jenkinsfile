@@ -46,12 +46,14 @@ pipeline{
         }
         
         stage('parallel trigger'){
-            parallel{
+            parallel {
                 stage('SG rules'){
-                    script{
-                        build job: '30-sg-rules',
-                        wait: false,
-                        propagate: false
+                    steps{
+                        script{
+                            build job: '30-sg-rules',
+                            wait: false,
+                            propagate: false
+                        }
                     }
                 }
                 stage('trigger ecr'){
