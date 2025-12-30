@@ -1,4 +1,4 @@
-resource "aws_ecr_repository" "main" {
+resource "aws_ecr_repository" "catalogue" {
   name                 = "${var.project}/catalogue"
   image_tag_mutability = "MUTABLE"
 
@@ -8,7 +8,7 @@ resource "aws_ecr_repository" "main" {
   force_delete = true
 }
 
-resource "aws_ecr_repository" "main" {
+resource "aws_ecr_repository" "cart" {
   name                 = "${var.project}/cart"
   image_tag_mutability = "MUTABLE"
 
@@ -17,7 +17,8 @@ resource "aws_ecr_repository" "main" {
   }
   force_delete = true
 }
-resource "aws_ecr_repository" "main" {
+
+resource "aws_ecr_repository" "user" {
   name                 = "${var.project}/user"
   image_tag_mutability = "MUTABLE"
 
@@ -27,8 +28,8 @@ resource "aws_ecr_repository" "main" {
   force_delete = true
 }
 
-resource "aws_ecr_repository" "main" {
-  name                 = "${var.project}/payment"
+resource "aws_ecr_repository" "shipping" {
+  name                 = "${var.project}/shipping"
   image_tag_mutability = "MUTABLE"
 
   image_scanning_configuration {
@@ -36,8 +37,9 @@ resource "aws_ecr_repository" "main" {
   }
   force_delete = true
 }
-resource "aws_ecr_repository" "main" {
-  name                 = "${var.project}/shipping"
+
+resource "aws_ecr_repository" "payment" {
+  name                 = "${var.project}/payment"
   image_tag_mutability = "MUTABLE"
 
   image_scanning_configuration {
