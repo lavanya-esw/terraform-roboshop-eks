@@ -44,6 +44,15 @@ pipeline{
                 }
             }
         }
+        stage('Trigger ingress alb') {
+            steps {
+                script {
+                    build job: '80-ingress-alb',
+                        wait: false, // Wait for completion
+                        propagate: false // Propagate status
+                }
+            }
+        }
     }
     
     post{
