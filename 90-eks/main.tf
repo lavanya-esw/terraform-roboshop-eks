@@ -34,7 +34,20 @@ create_node_security_group = false
 
   # EKS Managed Node Group(s)
   eks_managed_node_groups = {
-    # blue = {
+    blue = {
+      # Starting on 1.30, AL2023 is the default AMI type for EKS managed node groups
+      ami_type       = "AL2023_x86_64_STANDARD"
+      instance_types = ["t3.micro"]
+      iam_role_additional_policies  = {
+        amazonEFS = "arn:aws:iam::aws:policy/service-role/AmazonEFSCSIDriverPolicy"
+        amazonEBS = "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy"
+      }
+    # cluster nodes autoscaling
+      min_size     = 2
+      max_size     = 10
+      desired_size = 2
+    }
+    # green = {
     #   # Starting on 1.30, AL2023 is the default AMI type for EKS managed node groups
     #   ami_type       = "AL2023_x86_64_STANDARD"
     #   instance_types = ["m5.xlarge"]
@@ -46,19 +59,6 @@ create_node_security_group = false
     #   min_size     = 2
     #   max_size     = 10
     #   desired_size = 2
-    # }
-    green = {
-      # Starting on 1.30, AL2023 is the default AMI type for EKS managed node groups
-      ami_type       = "AL2023_x86_64_STANDARD"
-      instance_types = ["m5.xlarge"]
-      iam_role_additional_policies  = {
-        amazonEFS = "arn:aws:iam::aws:policy/service-role/AmazonEFSCSIDriverPolicy"
-        amazonEBS = "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy"
-      }
-    # cluster nodes autoscaling
-      min_size     = 2
-      max_size     = 10
-      desired_size = 2
 
       #   taints = {
       #   upgrade = {
@@ -67,7 +67,7 @@ create_node_security_group = false
       #     effect = "NO_SCHEDULE"
       #   }
       # }
-    }
+    #}
   }
 
   tags = merge(
