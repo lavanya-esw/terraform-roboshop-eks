@@ -74,15 +74,6 @@ pipeline{
                         }
                     }
                 }
-                stage('trigger ingress alb'){
-                    steps{
-                        script{
-                            build job: '80-ingress-alb',
-                            wait: false,
-                            propagate: false  
-                        }
-                    }
-                }
                 stage('trigger eks'){
                     steps{
                         script{
