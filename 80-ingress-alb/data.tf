@@ -15,3 +15,7 @@ data "aws_ssm_parameter" "ingress_alb_certificate_arn" {
 data "aws_route53_zone" "zone_id" {
   name = "awsdevops.fun" # Note the trailing dot for the FQDN
 }
+
+data "aws_ssm_parameter" "vpc_id" {
+  name = "/${var.project}/${var.environment}/vpc_id"
+}
